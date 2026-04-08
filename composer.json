@@ -1,0 +1,88 @@
+{
+    "name": "carmelosantana/coqui-awesome-wp",
+    "description": "Comprehensive WordPress management toolkit for Coqui — multi-site REST API + WP-CLI integration for content, users, plugins, themes, media, menus, settings, health monitoring, custom code scaffolding, and more",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Carmelo Santana"
+        }
+    ],
+    "keywords": [
+        "php-agents",
+        "wordpress",
+        "wp-rest-api",
+        "wp-cli",
+        "coqui",
+        "toolkit",
+        "site-management"
+    ],
+    "require": {
+        "php": "^8.4",
+        "symfony/http-client": "^7.0"
+    },
+    "require-dev": {
+        "carmelosantana/php-agents": "^0.7",
+        "pestphp/pest": "^3.0",
+        "phpstan/phpstan": "^2.0"
+    },
+    "suggest": {
+        "coquibot/coqui-toolkit-wp-cli": "Enables WP-CLI operations (database, wp-config.php, core updates, scaffold deploy via SSH)"
+    },
+    "autoload": {
+        "psr-4": {
+            "CarmeloSantana\\CoquiAwesomeWp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CarmeloSantana\\CoquiAwesomeWp\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "analyse": "phpstan analyse"
+    },
+    "extra": {
+        "php-agents": {
+            "toolkits": [
+                "CarmeloSantana\\CoquiAwesomeWp\\AwesomeWpToolkit"
+            ],
+            "description": "WordPress management via REST API + WP-CLI — multi-site connections, content, users, plugins, themes, media, menus, blocks, settings, health monitoring, wp-config, custom plugin/theme scaffolding",
+            "credentials": {
+                "AWP_DEFAULT_URL": {
+                    "description": "Default WordPress site URL (e.g. https://example.com) — optional if using multi-site manager",
+                    "optional": true
+                },
+                "AWP_DEFAULT_USERNAME": {
+                    "description": "Default WordPress username for REST API authentication — optional if using multi-site manager",
+                    "optional": true
+                },
+                "AWP_DEFAULT_APP_PASSWORD": {
+                    "description": "Default WordPress Application Password for REST API authentication — generate at Users → Profile → Application Passwords",
+                    "optional": true
+                }
+            },
+            "gated": {
+                "awp_config": ["*"],
+                "awp_scaffold": ["deploy"],
+                "awp_sites": ["remove"],
+                "awp_rest": ["post", "put", "patch", "delete"],
+                "awp_plugins": ["install", "activate", "deactivate", "delete", "update"],
+                "awp_themes": ["activate"],
+                "awp_users": ["create", "delete"],
+                "awp_settings": ["update"],
+                "awp_comments": ["delete"]
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
